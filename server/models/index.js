@@ -1,6 +1,13 @@
 'use strict';
 import Mongoose from './init-mongoose';
 import Util from 'util';
+import Candidate from './candidate';
+import Exam from './exam';
+import Question from './question';
+import Study from './study';
+import Subject from './subject';
+import Teacher from './teacher';
+import User from './user';
 
 module.exports = {
     connect: async db => {
@@ -36,5 +43,12 @@ module.exports = {
                 );
             });
         }
-    }
+    },
+    Candidate,
+    Exam,
+    Question,
+    Study,
+    Subject,
+    Teacher,
+    User
 };
