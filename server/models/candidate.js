@@ -14,29 +14,23 @@ const schema = new Mongoose.Schema(
         },
         exam: {
             type: Mongoose.Types.ObjectId,
-            ref: 'Exam',
-            unique: true,
+            ref: 'Exam'
+        },
+        teacher: {
+            type: Mongoose.Types.ObjectId,
+            ref: 'Teacher',
             required: true
         },
-        questions: [
-            {
-                question: {
-                    type: Mongoose.Types.ObjectId,
-                    ref: 'Question'
-                },
-                answer: {
-                    type: Array
-                },
-                image: {
-                    type: String
-                }
-            }
-        ],
-        totalTime: {
-            type: String
+        testKit: {
+            type: Mongoose.Types.ObjectId,
+            ref: 'TestKit',
+            required: true
         },
         answer: {
-            type: Array
+            type: String,
+        },
+        totalTime: {
+            type: String
         },
         totalPoint: {
             type: String,

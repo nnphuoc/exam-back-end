@@ -53,6 +53,10 @@ const schema = new Mongoose.Schema(
             type: Number,
             default: 0
         },
+        countTestKit: {
+            type: Number,
+            default: 0
+        },
         countView: {
             type: Number,
             default: 0

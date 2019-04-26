@@ -1,15 +1,15 @@
 'use strict';
 
-import { omit, pick } from 'lodash';
+import { pick } from 'lodash';
 import { User } from '../models';
-import { JWT, Response, StringHelper } from '../helpers';
+import { JWT, Response } from '../helpers';
 
 export default class ControllerUser {
 
     static async getAllByAdmin (req, res, next) {
         try {
-            const { limit, page } = req.params;
-            const results = await User.getAll(limit, page);
+            const { limit, page } = req.query;
+            const results = await User.getAll({ limit, page });
             return Response.success(res, results);
         } catch (e) {
             return next(e);
@@ -65,11 +65,13 @@ export default class ControllerUser {
             if (count > 0) {
                 return next(new Error('USERNAME_USED'));
             }
+            const avatar = ControllerUser.getAvatarRandom();
             const user = await User.create({
                 username,
-                password
+                password,
+                avatar
             });
-            delete user._doc.password
+            delete user._doc.password;
             return Response.success(res, user);
         } catch (e) {
             return next(e);
@@ -79,8 +81,8 @@ export default class ControllerUser {
     static async update (req, res, next) {
         try {
             const _id = req.user._id;
-            const data = pick(req.body, ['avatar', 'name', 'phone', 'address', 'school', 'dateOfBirth', 'female', 'city'])
-            const result = await User.update({_id}, { $set: data });
+            const data = pick(req.body, ['avatar', 'name', 'phone', 'address', 'school', 'dateOfBirth', 'female', 'city']);
+            const result = await User.update({ _id }, { $set: data });
             if (result.nModified === 0) {
                 return next(new Error('ACTION_FAILED'));
             }

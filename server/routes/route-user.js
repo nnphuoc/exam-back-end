@@ -30,4 +30,4 @@ module.exports = (app, router) => {
         .route('/admin/users')
         .get([isAuth, isAdmin, ValidationBase.validatePagination],ControllerUser.getAllByAdmin);
 
-}
+};

@@ -2,13 +2,13 @@
 
 import { pick } from "lodash";
 import { Teacher, User } from "../models";
-import {Response} from "../helpers";
+import { Response } from "../helpers";
 
 export default class ControllerTeacher {
     static async getAll (req, res, next) {
         try {
-            const { limit, page} = req.body;
-            const results = await Teacher.getAll(limit, page);
+            const { limit, page } = req.query;
+            const results = await Teacher.getAll({ limit, page });
             return Response.success(res, results);
         } catch (e) {
             return next(e);

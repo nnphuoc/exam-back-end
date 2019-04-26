@@ -8,6 +8,7 @@ import Study from './study';
 import Subject from './subject';
 import Teacher from './teacher';
 import User from './user';
+import TestKit from './test-kit';
 
 module.exports = {
     connect: async db => {
@@ -50,5 +51,6 @@ module.exports = {
     Study,
     Subject,
     Teacher,
-    User
+    User,
+    TestKit
 };

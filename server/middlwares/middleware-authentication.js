@@ -36,7 +36,7 @@ export default class AuthMiddleware {
                 where: {
                     _id: req.user._id
                 },
-                select: '_id changePasswordAt role username email'
+                select: '_id changePasswordAt role username email teacher'
             });
             if (!user) {
                 return next(new Error('AUTHENTICATION_FAILED'));
@@ -53,7 +53,7 @@ export default class AuthMiddleware {
             }
             req.user.role = user.role;
             req.user.username = user.username;
-            req.user.email = user.email;
+            req.user.teacher = user.teacher;
 
             if (next) {
                 return next();

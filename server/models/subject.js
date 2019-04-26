@@ -9,7 +9,14 @@ const schema = new Mongoose.Schema(
         name: {
             type: String,
             maxlength: 254,
-            required: true
+            required: true,
+            unique: true
+        },
+        slug: {
+            type: String,
+            maxlength: 254,
+            required: true,
+            unique: true
         },
         countExam: {
             type: Number,

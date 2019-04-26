@@ -2,7 +2,7 @@
 
 import { ControllerTeacher } from '../controllers';
 import { User } from '../models';
-import { ValidatorUser, ValidationBase } from '../validations';
+import { ValidationBase } from '../validations';
 import { AuthMiddleware, RoleMiddleware } from '../middlwares';
 
 const isAdmin = RoleMiddleware.isValidRole(User.ROLE.ADMIN);
