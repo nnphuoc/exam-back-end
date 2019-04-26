@@ -1,3 +1,4 @@
+/*
 'use strict';
 
 import { Candidate } from '../models';
@@ -62,4 +63,4 @@ export default class ControllerCandidate {
             return next(e);
         }
     }
-}
+}*/
