@@ -7,6 +7,7 @@ import ControllerQuestion from './controller-question';
 import ControllerExam from './controller-exam';
 import ControllerCandidate from './controller-candidate';
 import ControllerTestKit from './controller-test-kit';
+import ControllerStudy from './controller-study';
 
 module.exports = {
     ControllerUser,
@@ -15,5 +16,6 @@ module.exports = {
     ControllerQuestion,
     ControllerExam,
     ControllerCandidate,
-    ControllerTestKit
+    ControllerTestKit,
+    ControllerStudy
 };

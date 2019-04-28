@@ -1,6 +1,6 @@
 'use strict';
 
-import {TestKit, Teacher, Question, Subject} from '../models';
+import { TestKit, Teacher, Question, Subject } from '../models';
 import { Response } from "../helpers";
 import { pick } from 'lodash';
 

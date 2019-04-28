@@ -1,6 +1,6 @@
 'use strict';
 
-import {Exam, Subject, Teacher} from '../models'
+import { Exam, Subject, Teacher } from '../models'
 import { Response } from "../helpers";
 import { pick } from 'lodash';
 
