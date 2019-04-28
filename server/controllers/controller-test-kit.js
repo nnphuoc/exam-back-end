@@ -50,11 +50,19 @@ export default class ControllerTestKit {
         try {
             const { limit, page } = req.query;
             const slug = req.body.slug;
-            const subject = await Subject.getOne({ where: { slug }, select: '_id'});
-            if (!subject) {
+            let where = {};
+            if (slug) {
+                where.slug = slug;
+            }
+            const subject = await Subject.getOne({ where, select: '_id'});
+            delete where.slug;
+            if (slug && !subject._id) {
                 return next(new Error('SUBJECT_NOT_FOUND'));
             }
-            const results = await TestKit.getAll({ where: { subject: subject._id }, limit, page });
+            if (subject) {
+                where.subject = subject._id;
+            }
+            const results = await TestKit.getAll({ where, limit, page });
             return Response.success(res, results);
         } catch (e) {
             return next(e);
@@ -64,7 +72,8 @@ export default class ControllerTestKit {
     static async create (req, res, next) {
         try {
             const teacher = req.user.teacher;
-            let data = pick(req.body, ['name', 'exam', 'question', 'number', 'subject']);
+            let data = pick(req.body, ['name', 'exam', 'question', 'subject']);
+            data.question = data.question.split(',');
             data.teacher = teacher;
             const promise = await Promise.all([
                 TestKit.create(data),
@@ -79,7 +88,7 @@ export default class ControllerTestKit {
 
     static async update (req, res, next) {
         try {
-            let data = pick(req.body, ['name', 'exam', 'question', 'number', 'subject']);
+            let data = pick(req.body, ['name', 'exam', 'question', 'subject']);
             const _id = req.params.id;
             const teacher = req.user.teacher;
             const result = await TestKit.updateOne({ _id, teacher }, { $set: { data }});

@@ -14,7 +14,7 @@ module.exports = (app, router) => {
     router
         .route('/test-kit')
         .get([ValidationBase.validatePagination], ControllerTestKit.getAll)
-        .post([isAuth, isTeacher], ControllerTestKit.createOne);
+        .post([isAuth, isTeacher], ControllerTestKit.create);
 
     router
         .route('/test-kit/subject/:slug')

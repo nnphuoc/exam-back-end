@@ -26,6 +26,11 @@ const schema = new Mongoose.Schema(
             type: Mongoose.Types.ObjectId,
             ref: 'Subject'
         },
+        testKit: {
+            type: Mongoose.Types.ObjectId,
+            ref: 'TestKit',
+            required: true
+        },
         numberStudent: {
             type: Number,
             maxlength: 500,
@@ -43,6 +48,18 @@ const schema = new Mongoose.Schema(
             type: String,
             enum: Object.values(STATUS),
             default: STATUS.RUNNING
+        },
+        isHelp: {
+            type: Boolean,
+            default: true
+        },
+        totalPoint: {
+            type: String,
+            default: '10'
+        },
+        number: {
+            type: Number,
+            default: 0
         }
     },
     {

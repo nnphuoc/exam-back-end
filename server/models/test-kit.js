@@ -11,8 +11,7 @@ const schema = new Mongoose.Schema(
             maxlength: 1000
         },
         question: {
-            type: Mongoose.Types.ObjectId,
-            ref: 'Question'
+            type: Array,
         },
         exam: {
             type: Mongoose.Types.ObjectId,
@@ -26,10 +25,6 @@ const schema = new Mongoose.Schema(
         teacher: {
             type: Mongoose.Types.ObjectId,
             ref: 'Teacher'
-        },
-        number: {
-            type: Number,
-            default: 0
         }
     },
     {

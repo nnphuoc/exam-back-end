@@ -21,24 +21,11 @@ const schema = new Mongoose.Schema(
             ref: 'Teacher',
             required: true
         },
-        testKit: {
-            type: Mongoose.Types.ObjectId,
-            ref: 'TestKit',
-            required: true
-        },
         answer: {
             type: String,
         },
         totalTime: {
             type: String
-        },
-        totalPoint: {
-            type: String,
-            default: '10'
-        },
-        isHelp: {
-            type: Boolean,
-            default: true
         }
     },
     {

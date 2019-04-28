@@ -76,7 +76,7 @@ export default class ControllerExam {
     static async create (req, res, next) {
         try {
             const teacher = req.user.teacher;
-            let data = pick(req.body, ['subject', 'numberStudent', 'timeStart', 'timeEnd', 'status']);
+            let data = pick(req.body, ['subject', 'numberStudent', 'timeStart', 'timeEnd', 'status', 'testKit', 'isHelp', 'totalPoint', 'number']);
             data.teacher = teacher;
             const result = await Exam.create(data);
             return Response.success(res, result);
@@ -89,7 +89,7 @@ export default class ControllerExam {
         try {
             const _id = req.params.id;
             const teacher = req.user.teacher;
-            let data = pick(req.body, ['subject', 'numberStudent', 'timeStart', 'timeEnd', 'status']);
+            let data = pick(req.body, ['subject', 'numberStudent', 'timeStart', 'timeEnd', 'status', 'isHelp', 'totalPoint', 'number']);
             data.teacher = teacher;
             const result = await Exam.updateOne({ _id }, { $set: data });
             if (result.nModified === 0) {
