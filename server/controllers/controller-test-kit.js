@@ -49,12 +49,13 @@ export default class ControllerTestKit {
     static async getAllBySubject (req, res, next) {
         try {
             const { limit, page } = req.query;
-            const slug = req.body.slug;
+            const slug = req.params.slug;
             let where = {};
             if (slug) {
                 where.slug = slug;
             }
             const subject = await Subject.getOne({ where, select: '_id'});
+            console.log(subject);
             delete where.slug;
             if (slug && !subject._id) {
                 return next(new Error('SUBJECT_NOT_FOUND'));
@@ -72,7 +73,7 @@ export default class ControllerTestKit {
     static async create (req, res, next) {
         try {
             const teacher = req.user.teacher;
-            let data = pick(req.body, ['name', 'exam', 'question', 'subject']);
+            let data = pick(req.body, ['name', 'question', 'subject']);
             data.question = data.question.split(',');
             data.teacher = teacher;
             const promise = await Promise.all([
@@ -91,7 +92,7 @@ export default class ControllerTestKit {
             let data = pick(req.body, ['name', 'exam', 'question', 'subject']);
             const _id = req.params.id;
             const teacher = req.user.teacher;
-            const result = await TestKit.updateOne({ _id, teacher }, { $set: { data }});
+            const result = await TestKit.updateOne({ _id, teacher }, { $set: data });
             if (result.nModified === 0) {
                 return next(new Error('ACTION_FAILED'));
             }

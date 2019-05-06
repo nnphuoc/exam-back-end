@@ -54,7 +54,6 @@ export default class AuthMiddleware {
             req.user.role = user.role;
             req.user.username = user.username;
             req.user.teacher = user.teacher;
-
             if (next) {
                 return next();
             }

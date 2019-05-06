@@ -20,7 +20,7 @@ const schema = new Mongoose.Schema(
         },
         teacher: {
             type: Mongoose.Types.ObjectId,
-            unique: true
+            ref: 'Teacher'
         },
         password: {
             type: String,

@@ -5,7 +5,7 @@ import ExamModelClass from './classes/exam';
 // import ExamPlugin from './plugins/exam-plugin';
 
 const STATUS = {
-    RUNNING: 'runnin',
+    RUNNING: 'running',
     PENDING: 'pending',
     CLOSE: 'close'
 };

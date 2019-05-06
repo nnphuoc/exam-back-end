@@ -19,8 +19,9 @@ export default class ControllerQuestion {
     static async getAllBySubject (req, res, next) {
         try {
             const { limit, page } = req.query;
-            const slug = req.body.slug;
+            const slug = req.params.slug;
             const subject = await Subject.getOne({ where: { slug }, select: '_id'});
+            console.log(subject);
             if (!subject) {
                 return next(new Error('SUBJECT_NOT_FOUND'));
             }
@@ -34,7 +35,7 @@ export default class ControllerQuestion {
     static async getAllByTeacher (req, res, next) {
         try {
             const { limit, page } = req.query;
-            const slug = req.body.slug;
+            const slug = req.params.slug;
             const teacher = await Teacher.getOne({ where: { slug }, select: '_id'});
             if (!teacher) {
                 return next(new Error('TEACHER_NOT_FOUND'));
@@ -48,13 +49,14 @@ export default class ControllerQuestion {
 
     static async createOne (req, res, next) {
         try {
-            let data = pick(req.body, ['question', 'answer', 'correct', 'image', 'help', 'subject', 'teacher']);
+            let data = pick(req.body, ['question', 'answer', 'correct', 'image', 'help', 'subject']);
+            data.teacher = req.user.teacher;
             if (data.answer) {
                 data.answer = data.answer.split(',');
             }
             const promise = await Promise.all([
-               Subject.countDocuments({ where: { _id: data.subject }}),
-               Teacher.countDocuments({ where: { _id: data.teacher }})
+               Subject.countDocuments({ _id: data.subject }),
+               Teacher.countDocuments({ _id: data.teacher })
             ]);
             const [ countSubject, countTeacher ] = promise;
             if (countSubject === 0 || countTeacher === 0) {
@@ -80,7 +82,7 @@ export default class ControllerQuestion {
             }
             const _id = req.params.id;
             const teacher = req.user.teacher;
-            const result = await Question.updateOne({ _id, teacher }, { $set: { data }});
+            const result = await Question.updateOne({ _id, teacher }, { $set: data });
             if (result.nModified === 0) {
                 return next(new Error('ACTION_FAILED'));
             }

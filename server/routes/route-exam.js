@@ -26,6 +26,6 @@ module.exports = (app, router) => {
 
     router
         .route('/exam/:id')
-        .put([ValidationBase.validateObjectId], ControllerExam.update)
-        .delete([ValidationBase.validateObjectId], ControllerExam.delete);
+        .put([isAuth, isTeacher, ValidationBase.validateObjectId], ControllerExam.update)
+        .delete([isAuth, isTeacher, ValidationBase.validateObjectId], ControllerExam.delete);
 };

@@ -9,14 +9,13 @@ const schema = new Mongoose.Schema(
         user: {
             type: Mongoose.Types.ObjectId,
             ref: 'User',
-            unique: true,
             required: true
         },
         teacher: {
             type: Mongoose.Types.ObjectId,
             ref: 'Teacher'
         },
-        cadidate: {
+        candidate: {
             type: Mongoose.Types.ObjectId,
             ref: 'Candidate'
         },
@@ -26,10 +25,10 @@ const schema = new Mongoose.Schema(
         },
         exam: {
             type: Mongoose.Types.ObjectId,
-            ref: 'exame'
+            ref: 'exam'
         },
         point: {
-            type: Number,
+            type: String,
             default: 0
         }
     },

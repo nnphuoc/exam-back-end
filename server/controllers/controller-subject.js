@@ -23,12 +23,13 @@ export default class ControllerSubject {
             const slug = name.normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '')
                 .replace(/đ/g, 'd').replace(/Đ/g, 'D')
-                .replace(' ', '-');
-            const count = await Subject.countDocuments({ where: { name, slug }});
+                .replace(' ', '-')
+                .toLowerCase();
+            const count = await Subject.countDocuments({ name, slug });
             if (count > 0) {
                 return next(new Error('SUBJECT_EXIST'));
             }
-            await Subject.create({ name });
+            await Subject.create({ name, slug });
             return Response.success(res);
         } catch (e) {
             return next(e);

@@ -95,7 +95,7 @@ export default class ControllerExam {
             if (result.nModified === 0) {
                 return next(new Error('ACTION_FAILED'));
             }
-            return Response.success(res, result);
+            return Response.success(res);
         } catch (e) {
             return next(e);
         }

@@ -14,9 +14,7 @@ const schema = new Mongoose.Schema(
         },
         subject: {
             type: Mongoose.Types.ObjectId,
-            ref: 'Subject',
-            required: true,
-            unique: true
+            ref: 'Subject'
         },
         avatar: {
             type: String
@@ -30,8 +28,7 @@ const schema = new Mongoose.Schema(
         },
         slug: {
             type: String,
-            unique: true,
-            required: true
+            unique: true
         },
         hotLine: {
             type: String,

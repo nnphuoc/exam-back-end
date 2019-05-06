@@ -41,15 +41,15 @@ export default class ControllerTeacher {
         }
     }
 
-    static async becomeTeacher (res, req, next) {
+    static async becomeTeacher (req, res, next) {
         try {
             const user = req.user._id;
-            const count = await User.countDocuments({where: { _id: user, teacher: { $ne: null }, deletedAt: null }});
+            const count = await User.countDocuments({ _id: user, teacher: { $ne: null }, deletedAt: null });
             if (count > 0) {
                 return next(new Error('TEACHER_EXIST'));
             }
             const teacher = await Teacher.create({ user });
-            await User.update({ _id: user }, { $set: { role: User.ROLE.TEACHER, teacher: teacher._id }});
+            await User.updateOne({ _id: user }, { $set: { role: User.ROLE.TEACHER, teacher: teacher._id }});
             teacher.slug = teacher._id;
             await teacher.save();
             return Response.success(res, teacher);
@@ -64,7 +64,7 @@ export default class ControllerTeacher {
                 return next(new Error('MISSING_PARAMS'));
             }
             const slug = req.body.slug;
-            const count = await Teacher.countDocuments({ where: { slug }});
+            const count = await Teacher.countDocuments({ slug });
             if (count > 0) {
                 return next(new Error('SLUG_USED'));
             }
@@ -79,9 +79,10 @@ export default class ControllerTeacher {
             if (!req.body.slug) {
                 return next(new Error('MISSING_PARAMS'));
             }
-            const _id = req.user._id;
+            const _id = req.user.teacher;
             const slug = req.body.slug;
-            const result = await Teacher.update({ _id }, { $set: {slug}});
+            const result = await Teacher.updateOne({ _id }, { $set: { slug }});
+            console.log(result);
             if (result.nModified === 0) {
                 return next(new Error('ACTION_FAILED'));
             }
@@ -95,7 +96,7 @@ export default class ControllerTeacher {
         try {
             const data = pick(req.body, ['subject', 'avatar', 'coverImage', 'about', 'hotline', 'fbLink']);
             const _id = req.user._id;
-            const result = await Teacher.update({ _id }, { $set: { data }});
+            const result = await Teacher.updateOne({ _id }, { $set: data });
             if (result.nModified === 0) {
                 return next(new Error('ACTION_FAILED'));
             }

@@ -1,6 +1,6 @@
 'use strict';
 
-import { pick } from 'lodash';
+import { pick, omit } from 'lodash';
 import { User } from '../models';
 import { JWT, Response } from '../helpers';
 
@@ -19,7 +19,8 @@ export default class ControllerUser {
     static async getOne (req, res, next) {
         try {
             const _id = req.params.id;
-            const results = await User.getOne({ where: { _id }, select: '-password'});
+            let results = await User.getOne({ where: { _id }, select: '-password'});
+            results = omit(results, ['changePasswordAt', 'role', 'isVerify']);
             return Response.success(res, results);
         } catch (e) {
             return next(e);
@@ -82,7 +83,7 @@ export default class ControllerUser {
         try {
             const _id = req.user._id;
             const data = pick(req.body, ['avatar', 'name', 'phone', 'address', 'school', 'dateOfBirth', 'female', 'city']);
-            const result = await User.update({ _id }, { $set: data });
+            const result = await User.updateOne({ _id }, { $set: data });
             if (result.nModified === 0) {
                 return next(new Error('ACTION_FAILED'));
             }

@@ -4,14 +4,16 @@ import BodyParser from 'body-parser';
 import Cors from 'cors';
 import FS from 'fs';
 import Http from 'http';
-import I18N from 'i18n';
-import Helmet from 'helmet';
 import Path from 'path';
+import Helmet from 'helmet';
+import Logger from './helpers/logger';
 import Compress from 'compression';
 import MethodOverride from 'method-override';
-import Logger from './helpers/logger';
 import { port, db } from './config';
+import Response from './helpers/response';
+import I18N from 'i18n';
 import { connect } from './models';
+import { InitController } from './controllers';
 
 const app = Express();
 
@@ -36,13 +38,15 @@ app.use(I18N.init)
     )
     .use(Helmet());
 
+app.set('views', Path.join(__dirname, 'pages')).set('view engine', 'ejs');
+
 app.get('/favicon.ico', (req, res) => res.status(204));
 
 global.__rootDir = __dirname.replace('/server', '');
 
+// Bootstrap routes
 const router = Express.Router();
 const routePath = `${__dirname}/routes`;
-
 FS.readdir(routePath, (e, fileNames) => {
     if (e) {
         Logger.error(new Error(e));
@@ -70,6 +74,5 @@ connect(db).then(() => {
     });
     // InitController.initDefault();
 });
-
 
 module.exports = app;

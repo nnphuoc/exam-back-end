@@ -9,19 +9,17 @@ const schema = new Mongoose.Schema(
         subject: {
             type: Mongoose.Types.ObjectId,
             ref: 'Subject',
-            required: true,
-            unique: true
+            required: true
         },
         teacher: {
             type: Mongoose.Types.ObjectId,
             ref: 'Teacher',
-            required: true,
-            unique: true
+            required: true
         },
         question: {
             type: String
         },
-        anwer: {
+        answer: {
             type: Array,
             maxlength: 10
         },

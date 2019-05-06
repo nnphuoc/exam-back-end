@@ -5,9 +5,7 @@ import { User } from '../models'
 import { ValidationBase } from '../validations';
 import { AuthMiddleware, RoleMiddleware } from '../middlwares';
 
-const isTeacher = RoleMiddleware.isValidRole(User.ROLE.TEACHER);
 const isAuth = AuthMiddleware.isAuth;
-const isOptionalAuth = AuthMiddleware.isOptionalAuth;
 
 module.exports = (app, router) => {
 

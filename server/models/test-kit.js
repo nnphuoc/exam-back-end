@@ -13,11 +13,6 @@ const schema = new Mongoose.Schema(
         question: {
             type: Array,
         },
-        exam: {
-            type: Mongoose.Types.ObjectId,
-            ref: 'Exam',
-            unique: true,
-        },
         subject: {
             type: Mongoose.Types.ObjectId,
             ref: 'Subject'
